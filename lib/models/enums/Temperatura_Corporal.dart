@@ -1,4 +1,5 @@
 enum TemperaturaCorporal {
+  nenhum(fatorTermico: 0),
   semFebre(fatorTermico: 1.0),
   trintaEOito(fatorTermico: 1.1),
   trintaENove(fatorTermico: 1.2),

@@ -1,4 +1,5 @@
 enum Etnia {
+  nenhum(etnia: ''),
   branco(etnia: 'branco'),
   negro(etnia: 'negro');
 

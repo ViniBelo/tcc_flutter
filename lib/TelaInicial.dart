@@ -1,8 +1,8 @@
-import 'package:estudos_flutter/MyDropdownButton.dart';
-import 'package:estudos_flutter/enums/Etnia.dart';
-import 'package:estudos_flutter/enums/Fator_Atividade.dart';
-import 'package:estudos_flutter/enums/Sexo.dart';
-import 'package:estudos_flutter/enums/Temperatura_Corporal.dart';
+import 'package:estudos_flutter/abstractMaterials/MyDropdownButton.dart';
+import 'package:estudos_flutter/models/enums/Etnia.dart';
+import 'package:estudos_flutter/models/enums/Fator_Atividade.dart';
+import 'package:estudos_flutter/models/enums/Sexo.dart';
+import 'package:estudos_flutter/models/enums/Temperatura_Corporal.dart';
 import 'package:flutter/material.dart';
 
 class TelaInicial extends StatefulWidget {
@@ -13,10 +13,10 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
-  Sexo _selectedValueSexo = Sexo.homem;
-  Etnia _selectedValueEtnia = Etnia.branco;
-  TemperaturaCorporal _selectedValueTemperatura = TemperaturaCorporal.semFebre;
-  FatorAtividade _selectedValueAtividade = FatorAtividade.confinadoAoLeito;
+  Sexo _selectedValueSexo = Sexo.nenhum;
+  Etnia _selectedValueEtnia = Etnia.nenhum;
+  TemperaturaCorporal _selectedValueTemperatura = TemperaturaCorporal.nenhum;
+  FatorAtividade _selectedValueAtividade = FatorAtividade.nenhum;
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +36,35 @@ class _TelaInicialState extends State<TelaInicial> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyDropdownButton<Sexo>(
-                    _selectedValueSexo,
-                    Sexo.values,
-                    (newValue) {
-                      setState(() {
-                        _selectedValueSexo = newValue!;
-                      });
-                    },
+                  Column(
+                    children: [
+                      const Text('Sexo'),
+                      MyDropdownButton<Sexo>(
+                        _selectedValueSexo,
+                        Sexo.values,
+                        ['Selecione uma opção', 'Homem', 'Mulher'],
+                        (newValue) {
+                          setState(() {
+                            _selectedValueSexo = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  MyDropdownButton<Etnia>(
-                    _selectedValueEtnia,
-                    Etnia.values,
-                    (newValue) {
-                      setState(() {
-                        _selectedValueEtnia = newValue!;
-                      });
-                    },
+                  Column(
+                    children: [
+                      const Text('Raça / Etnia'),
+                      MyDropdownButton<Etnia>(
+                        _selectedValueEtnia,
+                        Etnia.values,
+                        ['Selecione uma opção', 'Branco', 'Negro'],
+                        (newValue) {
+                          setState(() {
+                            _selectedValueEtnia = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                   Text('Idade'),
                   Text('Peso em kg'),
@@ -65,23 +77,47 @@ class _TelaInicialState extends State<TelaInicial> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyDropdownButton<TemperaturaCorporal>(
-                    _selectedValueTemperatura,
-                    TemperaturaCorporal.values,
-                    (newValue) {
-                      setState(() {
-                        _selectedValueTemperatura = newValue!;
-                      });
-                    },
+                  Column(
+                    children: [
+                      const Text('Temperatura Corporal'),
+                      MyDropdownButton<TemperaturaCorporal>(
+                        _selectedValueTemperatura,
+                        TemperaturaCorporal.values,
+                        [
+                          'Selecione uma opção',
+                          'Sem febre',
+                          '38°C de febre',
+                          '39°C de febre',
+                          '40°C de febre',
+                          '41°C de febre'
+                        ],
+                        (newValue) {
+                          setState(() {
+                            _selectedValueTemperatura = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  MyDropdownButton<FatorAtividade>(
-                    _selectedValueAtividade,
-                    FatorAtividade.values,
-                    (newValue) {
-                      setState(() {
-                        _selectedValueAtividade = newValue!;
-                      });
-                    },
+                  Column(
+                    children: [
+                      const Text('Fator Atividade'),
+                      MyDropdownButton<FatorAtividade>(
+                        _selectedValueAtividade,
+                        FatorAtividade.values,
+                        [
+                          'Selecione uma opção',
+                          'Confinado ao leito',
+                          'Acamado, porém móvel',
+                          'Paciente que deambula'
+                        ],
+                        (newValue) {
+                          setState(() {
+                            _selectedValueAtividade = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                   Text('Fator injúria'),
                   Text('Altura em cm'),

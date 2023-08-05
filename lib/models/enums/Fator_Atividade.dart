@@ -1,4 +1,5 @@
 enum FatorAtividade {
+  nenhum(fatorAtividade: 0),
   confinadoAoLeito(fatorAtividade: 1.2),
   acamadoPoremMovel(fatorAtividade: 1.25),
   deambula(fatorAtividade: 1.3);
