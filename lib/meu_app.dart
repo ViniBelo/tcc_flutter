@@ -1,5 +1,4 @@
-import 'package:estudos_flutter/TelaInicial.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:estudos_flutter/tela_inicial.dart';
 import 'package:flutter/material.dart';
 
 class MeuApp extends StatefulWidget {
