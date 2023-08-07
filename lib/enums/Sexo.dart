@@ -1,4 +1,4 @@
-enum Sexo {
+enum Sexo{
   homem(sexo: 'Homem'),
   mulher(sexo: 'Mulher');
 
