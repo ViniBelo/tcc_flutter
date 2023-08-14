@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../abstractMaterials/my_checkbox.dart';
 import '../abstractMaterials/my_dropdown_button.dart';
 import 'package:estudos_flutter/models/enums/etnia.dart';
@@ -19,10 +21,10 @@ class _TelaInicialState extends State<TelaInicial> {
   Etnia _selectedValueEtnia = Etnia.nenhum;
   TemperaturaCorporal _selectedValueTemperatura = TemperaturaCorporal.nenhum;
   FatorAtividade _selectedValueAtividade = FatorAtividade.nenhum;
-  String _entradaIdade = '';
-  String _entradaInjuria = '';
-  String _entradaPeso = '';
-  String _entradaAltura = '';
+  int _entradaIdade = 0;
+  double _entradaInjuria = 0.0;
+  double _entradaPeso = 0.0;
+  double _entradaAltura = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +81,15 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              Text('Idade'),
+                              const Text('Idade'),
                               TextFormField(
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                 onChanged: (value) {
+                                  int? convertedValue = int.tryParse(value);
                                   setState(() {
-                                    _entradaIdade = value;
+                                    _entradaIdade = convertedValue ?? 0;
                                   });
                                 },
                               )
@@ -93,7 +97,7 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Peso em kg'),
@@ -104,8 +108,9 @@ class _TelaInicialState extends State<TelaInicial> {
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
+                                  double? convertedValue = double.tryParse(value);
                                   setState(() {
-                                    _entradaPeso = value;
+                                    _entradaPeso = convertedValue ?? 0.0;
                                   });
                                 },
                               )
@@ -164,13 +169,14 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              Text('Fator injúria'),
+                              const Text('Fator injúria'),
                               TextFormField(
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
+                                  double? convertedValue = double.tryParse(value);
                                   setState(() {
-                                    _entradaInjuria = value;
+                                    _entradaInjuria = convertedValue ?? 0.0;
                                   });
                                 },
                               ),
@@ -178,7 +184,7 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Altura em cm'),
@@ -189,8 +195,9 @@ class _TelaInicialState extends State<TelaInicial> {
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
+                                  double? convertedValue = double.tryParse(value);
                                   setState(() {
-                                    _entradaAltura = value;
+                                    _entradaAltura = convertedValue ?? 0.0;
                                   });
                                 },
                               ),
@@ -214,9 +221,9 @@ class _TelaInicialState extends State<TelaInicial> {
                         etnia: _selectedValueEtnia,
                         idade: _entradaIdade,
                         peso: _entradaPeso,
-                        temperatura: _selectedValueTemperatura,
-                        atividade: _selectedValueAtividade,
-                        injuria: _entradaInjuria,
+                        fatorTermico: _selectedValueTemperatura,
+                        fatorAtividade: _selectedValueAtividade,
+                        fatorInjuria: _entradaInjuria,
                         altura: _entradaAltura,
                       );
                     }),
