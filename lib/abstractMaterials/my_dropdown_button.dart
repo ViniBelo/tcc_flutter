@@ -9,6 +9,7 @@ Widget MyDropdownButton<T>(
   return DropdownButton<T>(
     value: selectedValue,
     onChanged: onChanged,
+    alignment: Alignment.center,
     items: values.asMap().entries.map((entry) {
       int index = entry.key;
       T value = entry.value;

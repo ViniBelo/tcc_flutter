@@ -1,12 +1,11 @@
-
-import 'package:estudos_flutter/models/formula_get.dart';
+import 'package:estudos_flutter/controllers/taxa_metabolica_basal.dart';
+import 'package:estudos_flutter/models/formules/formula_get.dart';
 import 'package:flutter/material.dart';
 
 import '../models/enums/etnia.dart';
 import '../models/enums/fator_atividade.dart';
 import '../models/enums/sexo.dart';
 import '../models/enums/temperatura_corporal.dart';
-import '../models/taxa_metabolica_basal.dart';
 
 class ResultadoTela extends StatelessWidget {
   final Sexo sexo;
@@ -30,8 +29,9 @@ class ResultadoTela extends StatelessWidget {
     required this.altura,
   }) : super(key: key);
 
-  double get tmb => TMB(sexo, peso, altura, idade);
-  double get get => FormulaGET(tmb, fatorAtividade, fatorInjuria, fatorTermico);
+  double get tmb => formula_tmb(sexo, peso, altura, idade);
+  double get get =>
+      formula_get(tmb, fatorAtividade, fatorInjuria, fatorTermico);
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,11 @@ class ResultadoTela extends StatelessWidget {
             Text('Sexo: ${sexo.sexo}'),
             Text('Raça / Etnia: ${etnia.etnia}'),
             Text('Idade: ${idade.toString()}'),
-            Text('Peso: ${peso.toString()} kg'),
-            Text('Temperatura Corporal: ${fatorTermico.toString()}'),
-            Text('Fator Atividade: ${fatorAtividade.fatorAtividade}'),
+            Text('Peso: ${peso.toStringAsFixed(2)} kg'),
+            Text(
+                'Temperatura Corporal: ${fatorTermico.temperatura}, valor: ${fatorTermico.fatorTermico}'),
+            Text(
+                'Fator Atividade: ${fatorAtividade.atividade}, valor: ${fatorAtividade.fatorAtividade}'),
             Text('Fator Injúria: ${fatorInjuria.toString()}'),
             Text('Altura: ${altura.toStringAsFixed(0)} cm'),
             Text('TMB: ${tmb.toStringAsFixed(2)}'),

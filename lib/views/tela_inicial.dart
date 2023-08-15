@@ -1,3 +1,5 @@
+import 'package:estudos_flutter/controllers/altura_estimada.dart';
+import 'package:estudos_flutter/controllers/peso_estimado.dart';
 import 'package:flutter/services.dart';
 
 import '../abstractMaterials/my_checkbox.dart';
@@ -25,6 +27,11 @@ class _TelaInicialState extends State<TelaInicial> {
   double _entradaInjuria = 0.0;
   double _entradaPeso = 0.0;
   double _entradaAltura = 0.0;
+  double _alturaDeJoelho = 0.0;
+  double _circunferenciaDoBraco = 0.0;
+
+  bool isEstimativaPesoChecked = false;
+  bool isEstimativaAlturaChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +92,9 @@ class _TelaInicialState extends State<TelaInicial> {
                               TextFormField(
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 onChanged: (value) {
                                   int? convertedValue = int.tryParse(value);
                                   setState(() {
@@ -97,23 +106,81 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Peso em kg'),
-                                  MyCheckBox(),
+                                  const Text('Estimar peso?'),
+                                  MyCheckBox(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isEstimativaPesoChecked = value!;
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
-                              TextFormField(
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  double? convertedValue = double.tryParse(value);
-                                  setState(() {
-                                    _entradaPeso = convertedValue ?? 0.0;
-                                  });
-                                },
-                              )
+                              if (!isEstimativaPesoChecked)
+                                Column(
+                                  children: [
+                                    Text('Peso em kg'),
+                                    TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        double? convertedValue =
+                                            double.tryParse(value);
+                                        setState(() {
+                                          _entradaPeso = convertedValue ?? 0.0;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              if (isEstimativaPesoChecked)
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text('Altura do joelho em cm'),
+                                          TextFormField(
+                                            textAlign: TextAlign.center,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              double? convertedValue =
+                                                  double.tryParse(value);
+                                              setState(() {
+                                                _alturaDeJoelho =
+                                                    convertedValue ?? 0.0;
+                                                _entradaPeso = 0.0;
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text('Circunferência do braço em cm'),
+                                          TextFormField(
+                                            textAlign: TextAlign.center,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              double? convertedValue =
+                                                  double.tryParse(value);
+                                              setState(() {
+                                                _circunferenciaDoBraco =
+                                                    convertedValue ?? 0.0;
+                                                _entradaPeso = 0.0;
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
                             ],
                           ),
                         ],
@@ -174,7 +241,8 @@ class _TelaInicialState extends State<TelaInicial> {
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  double? convertedValue = double.tryParse(value);
+                                  double? convertedValue =
+                                      double.tryParse(value);
                                   setState(() {
                                     _entradaInjuria = convertedValue ?? 0.0;
                                   });
@@ -184,23 +252,57 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           Column(
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Altura em cm'),
-                                  MyCheckBox(),
+                                  Text('Estimar altura?'),
+                                  MyCheckBox(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isEstimativaAlturaChecked = value!;
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
-                              TextFormField(
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  double? convertedValue = double.tryParse(value);
-                                  setState(() {
-                                    _entradaAltura = convertedValue ?? 0.0;
-                                  });
-                                },
-                              ),
+                              if (!isEstimativaAlturaChecked)
+                                Column(
+                                  children: [
+                                    Text('Altura em cm'),
+                                    TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        double? convertedValue =
+                                            double.tryParse(value);
+                                        setState(() {
+                                          _entradaAltura =
+                                              convertedValue ?? 0.0;
+                                          _alturaDeJoelho = 0.0;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              if (isEstimativaAlturaChecked)
+                                Column(
+                                  children: [
+                                    Text('Altura do joelho em cm'),
+                                    TextField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        double? convertedValue =
+                                            double.tryParse(value);
+                                        setState(() {
+                                          _alturaDeJoelho =
+                                              convertedValue ?? 0.0;
+                                          _entradaAltura = 0.0;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                             ],
                           ),
                         ],
@@ -213,6 +315,17 @@ class _TelaInicialState extends State<TelaInicial> {
                 style:
                     OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
                 onPressed: () {
+                  if (isEstimativaAlturaChecked) {
+                    _entradaAltura = altura_estimada(_selectedValueSexo,
+                        _selectedValueEtnia, _alturaDeJoelho, _entradaIdade);
+                  }
+                  if (isEstimativaPesoChecked) {
+                    _entradaPeso = peso_estimado(
+                        _selectedValueSexo,
+                        _selectedValueEtnia,
+                        _alturaDeJoelho,
+                        _circunferenciaDoBraco);
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {

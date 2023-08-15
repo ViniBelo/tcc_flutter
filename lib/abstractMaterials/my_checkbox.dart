@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class MyCheckBox extends StatefulWidget {
-  const MyCheckBox({super.key});
+  final bool? isChecked;
+  final ValueSetter<bool?>? onChanged;
+
+  MyCheckBox({Key? key, this.onChanged, this.isChecked}) : super(key: key);
 
   @override
-  State<MyCheckBox> createState() => _MyCheckBoxState();
+  _MyCheckBoxState createState() => _MyCheckBoxState();
 }
 
 class _MyCheckBoxState extends State<MyCheckBox> {
@@ -32,6 +35,9 @@ class _MyCheckBoxState extends State<MyCheckBox> {
         setState(() {
           isChecked = value!;
         });
+        if (widget.onChanged != null) {
+          widget.onChanged!(value);
+        }
       },
     );
   }
