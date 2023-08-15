@@ -1,3 +1,4 @@
+import 'package:estudos_flutter/abstractMaterials/my_back_button.dart';
 import 'package:estudos_flutter/controllers/taxa_metabolica_basal.dart';
 import 'package:estudos_flutter/models/formules/formula_get.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class ResultadoTela extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Sexo: ${sexo.sexo}'),
@@ -57,6 +58,7 @@ class ResultadoTela extends StatelessWidget {
             Text('Altura: ${altura.toStringAsFixed(0)} cm'),
             Text('TMB: ${tmb.toStringAsFixed(2)}'),
             Text('GET: ${get.toStringAsFixed(2)}'),
+            MyFilledButton(),
           ],
         ),
       ),

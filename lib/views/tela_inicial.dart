@@ -1,5 +1,6 @@
-import 'package:estudos_flutter/controllers/altura_estimada.dart';
-import 'package:estudos_flutter/controllers/peso_estimado.dart';
+import 'package:estudos_flutter/controllers/estima_peso.dart';
+import 'package:estudos_flutter/controllers/finish_form.dart';
+import 'package:estudos_flutter/views/tela_final.dart';
 import 'package:flutter/services.dart';
 
 import '../abstractMaterials/my_checkbox.dart';
@@ -8,8 +9,10 @@ import 'package:estudos_flutter/models/enums/etnia.dart';
 import 'package:estudos_flutter/models/enums/fator_atividade.dart';
 import 'package:estudos_flutter/models/enums/sexo.dart';
 import 'package:estudos_flutter/models/enums/temperatura_corporal.dart';
-import 'package:estudos_flutter/views/tela_final.dart';
 import 'package:flutter/material.dart';
+
+import '../controllers/altura_estimada.dart';
+import '../controllers/peso_estimado.dart';
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -50,7 +53,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 child: Row(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: 500,
                       width: MediaQuery.of(context).size.width / 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,7 +190,7 @@ class _TelaInicialState extends State<TelaInicial> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: 500,
                       width: MediaQuery.of(context).size.width / 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -347,6 +350,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
+
             ],
           ),
         ),
