@@ -1,7 +1,7 @@
 enum Etnia {
   nenhum(etnia: ''),
-  branco(etnia: 'branco'),
-  negro(etnia: 'negro');
+  branco(etnia: 'Branco'),
+  negro(etnia: 'Negro');
 
   const Etnia({required this.etnia});
 
