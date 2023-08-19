@@ -5,8 +5,6 @@ import 'package:estudos_flutter/models/enums/sexo.dart';
 import 'package:estudos_flutter/models/enums/temperatura_corporal.dart';
 import 'package:flutter/material.dart';
 
-import 'altura_estimada.dart';
-
 class FinishForm extends StatelessWidget {
   final bool isEstimativaAlturaChecked;
   final bool isEstimativaPesoChecked;
@@ -18,8 +16,11 @@ class FinishForm extends StatelessWidget {
   final double _entradaInjuria;
   final double _entradaPeso;
   final double _entradaAltura;
+  final double? _alturaDeJoelho;
+  final double? _circunferenciaDoBraco;
 
-  FinishForm({
+  const FinishForm({
+    super.key,
     required this.isEstimativaAlturaChecked,
     required this.isEstimativaPesoChecked,
     required Sexo selectedValueSexo,
@@ -30,6 +31,8 @@ class FinishForm extends StatelessWidget {
     required double entradaInjuria,
     required double entradaPeso,
     required double entradaAltura,
+    double? alturaDeJoelho,
+    double? circunferenciaDoBraco,
   })  : _selectedValueSexo = selectedValueSexo,
         _selectedValueEtnia = selectedValueEtnia,
         _entradaIdade = entradaIdade,
@@ -37,12 +40,24 @@ class FinishForm extends StatelessWidget {
         _selectedValueAtividade = selectedValueAtividade,
         _entradaInjuria = entradaInjuria,
         _entradaPeso = entradaPeso,
-        _entradaAltura = entradaAltura;
-
-    
+        _entradaAltura = entradaAltura,
+        _alturaDeJoelho = alturaDeJoelho,
+        _circunferenciaDoBraco = circunferenciaDoBraco;
 
   @override
   Widget build(BuildContext context) {
-    return MyFinishFormButton(isEstimativaAlturaChecked: isEstimativaAlturaChecked, isEstimativaPesoChecked: isEstimativaPesoChecked, selectedValueSexo: _selectedValueSexo, selectedValueEtnia: _selectedValueEtnia, entradaIdade: _entradaIdade, selectedValueTemperatura: _selectedValueTemperatura, selectedValueAtividade: _selectedValueAtividade, entradaInjuria: _entradaInjuria, entradaPeso: _entradaPeso, entradaAltura: _entradaAltura);
+    return MyFinishFormButton(
+        isEstimativaAlturaChecked: isEstimativaAlturaChecked,
+        isEstimativaPesoChecked: isEstimativaPesoChecked,
+        selectedValueSexo: _selectedValueSexo,
+        selectedValueEtnia: _selectedValueEtnia,
+        entradaIdade: _entradaIdade,
+        selectedValueTemperatura: _selectedValueTemperatura,
+        selectedValueAtividade: _selectedValueAtividade,
+        entradaInjuria: _entradaInjuria,
+        entradaPeso: _entradaPeso,
+        entradaAltura: _entradaAltura,
+        alturaDeJoelho: _alturaDeJoelho,
+        circunferenciaDoBraco: _circunferenciaDoBraco);
   }
 }

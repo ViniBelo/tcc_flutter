@@ -3,25 +3,28 @@ import 'package:flutter/material.dart';
 import '../meu_app.dart';
 
 class MyFilledButton extends StatelessWidget {
+  const MyFilledButton({super.key});
+
   Future<bool?> _onBackPressed(BuildContext context) async {
     return showDialog<bool?>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Você tem certeza?'),
-        content: Text('Você irá voltar para a tela anterior e todos os dados serão apagados'),
+        title: const Text('Você tem certeza?'),
+        content: const Text(
+            'Você irá voltar para a tela anterior e todos os dados serão apagados'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Não'),
+            child: const Text('Não'),
           ),
           TextButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MeuApp()),
+                MaterialPageRoute(builder: (context) => const MeuApp()),
               );
             },
-            child: Text('Sim'),
+            child: const Text('Sim'),
           ),
         ],
       ),
@@ -30,19 +33,19 @@ class MyFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 200,
       height: 50,
       child: FilledButton(
-        style:
-            OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
+        style: OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
         onPressed: () async {
           bool? shouldPop = await _onBackPressed(context);
           if (shouldPop == true) {
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           }
         },
-        child: Text('Refazer cálculos'),
+        child: const Text('Refazer cálculos'),
       ),
     );
   }

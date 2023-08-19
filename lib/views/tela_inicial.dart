@@ -1,5 +1,6 @@
-import 'package:estudos_flutter/controllers/estima_peso.dart';
-import 'package:estudos_flutter/controllers/finish_form.dart';
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'package:estudos_flutter/abstractMaterials/my_text_field.dart';
 import 'package:estudos_flutter/views/tela_final.dart';
 import 'package:flutter/services.dart';
 
@@ -36,325 +37,456 @@ class _TelaInicialState extends State<TelaInicial> {
   bool isEstimativaPesoChecked = false;
   bool isEstimativaAlturaChecked = false;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Dados do Paciente'),
+        title: const Text(
+          'Dados do Paciente',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 500,
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              const Text('Sexo'),
-                              MyDropdownButton<Sexo>(
-                                _selectedValueSexo,
-                                Sexo.values,
-                                ['Selecione uma opção', 'Homem', 'Mulher'],
-                                (newValue) {
-                                  setState(() {
-                                    _selectedValueSexo = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text('Raça / Etnia'),
-                              MyDropdownButton<Etnia>(
-                                _selectedValueEtnia,
-                                Etnia.values,
-                                ['Selecione uma opção', 'Branco', 'Negro'],
-                                (newValue) {
-                                  setState(() {
-                                    _selectedValueEtnia = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text('Idade'),
-                              TextFormField(
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                onChanged: (value) {
-                                  int? convertedValue = int.tryParse(value);
-                                  setState(() {
-                                    _entradaIdade = convertedValue ?? 0;
-                                  });
-                                },
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Estimar peso?'),
-                                  MyCheckBox(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isEstimativaPesoChecked = value!;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              if (!isEstimativaPesoChecked)
-                                Column(
-                                  children: [
-                                    Text('Peso em kg'),
-                                    TextFormField(
-                                      textAlign: TextAlign.center,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _entradaPeso = convertedValue ?? 0.0;
-                                        });
-                                      },
-                                    ),
-                                  ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 2,
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                const Text(
+                                  'Sexo',
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              if (isEstimativaPesoChecked)
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text('Altura do joelho em cm'),
-                                          TextFormField(
-                                            textAlign: TextAlign.center,
-                                            keyboardType: TextInputType.number,
-                                            onChanged: (value) {
-                                              double? convertedValue =
-                                                  double.tryParse(value);
-                                              setState(() {
-                                                _alturaDeJoelho =
-                                                    convertedValue ?? 0.0;
-                                                _entradaPeso = 0.0;
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text('Circunferência do braço em cm'),
-                                          TextFormField(
-                                            textAlign: TextAlign.center,
-                                            keyboardType: TextInputType.number,
-                                            onChanged: (value) {
-                                              double? convertedValue =
-                                                  double.tryParse(value);
-                                              setState(() {
-                                                _circunferenciaDoBraco =
-                                                    convertedValue ?? 0.0;
-                                                _entradaPeso = 0.0;
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                MyDropdownButton(
+                                  selectedValue: _selectedValueSexo,
+                                  values: Sexo.values,
+                                  labels: const [
+                                    'Selecione uma opção',
+                                    'Homem',
+                                    'Mulher'
                                   ],
+                                  context: context,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValueSexo = value!;
+                                    });
+                                  },
+                                  // ignore: duplicate_ignore
+                                  validator: (value) {
+                                    if (value == Sexo.nenhum) {
+                                      return "Campo obrigatório";
+                                    }
+                                    return null;
+                                  },
                                 )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 500,
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              const Text('Temperatura Corporal'),
-                              MyDropdownButton<TemperaturaCorporal>(
-                                _selectedValueTemperatura,
-                                TemperaturaCorporal.values,
-                                [
-                                  'Selecione uma opção',
-                                  'Sem febre',
-                                  '38°C de febre',
-                                  '39°C de febre',
-                                  '40°C de febre',
-                                  '41°C de febre'
-                                ],
-                                (newValue) {
-                                  setState(() {
-                                    _selectedValueTemperatura = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text('Fator Atividade'),
-                              MyDropdownButton<FatorAtividade>(
-                                _selectedValueAtividade,
-                                FatorAtividade.values,
-                                [
-                                  'Selecione uma opção',
-                                  'Confinado ao leito',
-                                  'Acamado, porém móvel',
-                                  'Paciente que deambula'
-                                ],
-                                (newValue) {
-                                  setState(() {
-                                    _selectedValueAtividade = newValue!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text('Fator injúria'),
-                              TextFormField(
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  double? convertedValue =
-                                      double.tryParse(value);
-                                  setState(() {
-                                    _entradaInjuria = convertedValue ?? 0.0;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Estimar altura?'),
-                                  MyCheckBox(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isEstimativaAlturaChecked = value!;
-                                      });
-                                    },
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const Text(
+                                  'Raça / Etnia',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                MyDropdownButton(
+                                  selectedValue: _selectedValueEtnia,
+                                  values: Etnia.values,
+                                  labels: const [
+                                    'Selecione uma opção',
+                                    'Branco',
+                                    'Negro'
+                                  ],
+                                  context: context,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValueEtnia = value!;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == Etnia.nenhum) {
+                                      return "Campo obrigatório";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                MyTextField(
+                                  labelText: 'Idade',
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  onChanged: (value) {
+                                    int? convertedValue = int.tryParse(value);
+                                    setState(() {
+                                      _entradaIdade = convertedValue ?? 0;
+                                    });
+                                  },
+                                  validator: (entradaIdade) {
+                                    if (entradaIdade == '') {
+                                      return "Campo Obrigatório";
+                                    }
+                                    return null;
+                                  },
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Estimar peso?',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    MyCheckBox(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isEstimativaPesoChecked = value!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                if (!isEstimativaPesoChecked)
+                                  Column(
+                                    children: [
+                                      MyTextField(
+                                        labelText: 'Peso em kg',
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        onChanged: (value) {
+                                          double? convertedValue =
+                                              double.tryParse(value);
+                                          setState(() {
+                                            _entradaPeso =
+                                                convertedValue ?? 0.0;
+                                          });
+                                        },
+                                        validator: (entradaPeso) {
+                                          if (entradaPeso == '') {
+                                            return "Campo Obrigatório";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              if (!isEstimativaAlturaChecked)
-                                Column(
-                                  children: [
-                                    Text('Altura em cm'),
-                                    TextFormField(
-                                      textAlign: TextAlign.center,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _entradaAltura =
-                                              convertedValue ?? 0.0;
-                                          _alturaDeJoelho = 0.0;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              if (isEstimativaAlturaChecked)
-                                Column(
-                                  children: [
-                                    Text('Altura do joelho em cm'),
-                                    TextField(
-                                      textAlign: TextAlign.center,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _alturaDeJoelho =
-                                              convertedValue ?? 0.0;
-                                          _entradaAltura = 0.0;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                            ],
-                          ),
-                        ],
+                                if (isEstimativaPesoChecked)
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            MyTextField(
+                                              labelText:
+                                                  'Altura do joelho em cm',
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly
+                                              ],
+                                              onChanged: (value) {
+                                                double? convertedValue =
+                                                    double.tryParse(value);
+                                                setState(() {
+                                                  _alturaDeJoelho =
+                                                      convertedValue ?? 0.0;
+                                                  _entradaPeso = 0.0;
+                                                });
+                                              },
+                                              validator: (alturaDeJoelho) {
+                                                if (alturaDeJoelho == '') {
+                                                  return "Campo obrigatorio";
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            MyTextField(
+                                              labelText:
+                                                  'Circunferência do braço em cm',
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly
+                                              ],
+                                              onChanged: (value) {
+                                                double? convertedValue =
+                                                    double.tryParse(value);
+                                                setState(() {
+                                                  _circunferenciaDoBraco =
+                                                      convertedValue ?? 0.0;
+                                                  _entradaPeso = 0.0;
+                                                });
+                                              },
+                                              validator:
+                                                  (circunferenciaDoBraco) {
+                                                if (circunferenciaDoBraco ==
+                                                    '') {
+                                                  return "Campo Obrigatório";
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 2,
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                const Text(
+                                  'Temperatura Corporal',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                MyDropdownButton(
+                                  selectedValue: _selectedValueTemperatura,
+                                  values: TemperaturaCorporal.values,
+                                  labels: const [
+                                    'Selecione uma opção',
+                                    'Sem febre',
+                                    '38°C de febre',
+                                    '39°C de febre',
+                                    '40°C de febre',
+                                    '41°C de febre'
+                                  ],
+                                  context: context,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValueTemperatura = value!;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == TemperaturaCorporal.nenhum) {
+                                      return "Campo obrigatório";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const Text(
+                                  'Fator Atividade',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                MyDropdownButton(
+                                  selectedValue: _selectedValueAtividade,
+                                  values: FatorAtividade.values,
+                                  labels: const [
+                                    'Selecione uma opção',
+                                    'Confinado ao leito',
+                                    'Acamado, porém móvel',
+                                    'Paciente que deambula'
+                                  ],
+                                  context: context,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValueAtividade = value!;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == FatorAtividade.nenhum) {
+                                      return "Campo obrigatório";
+                                    }
+                                    return null;
+                                  },
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                MyTextField(
+                                  labelText: 'Fator injúria',
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  onChanged: (value) {
+                                    double? convertedValue =
+                                        double.tryParse(value);
+                                    setState(() {
+                                      _entradaInjuria = convertedValue ?? 0.0;
+                                    });
+                                  },
+                                  validator: (circunferenciaDoBraco) {
+                                    if (circunferenciaDoBraco == '') {
+                                      return "Campo Obrigatório";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Estimar altura?',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    MyCheckBox(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isEstimativaAlturaChecked = value!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                if (!isEstimativaAlturaChecked)
+                                  Column(
+                                    children: [
+                                      MyTextField(
+                                        labelText: 'Altura em cm',
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        onChanged: (value) {
+                                          double? convertedValue =
+                                              double.tryParse(value);
+                                          setState(() {
+                                            _entradaAltura =
+                                                convertedValue ?? 0.0;
+                                            _alturaDeJoelho = 0.0;
+                                          });
+                                        },
+                                        validator: (alturaDeJoelho) {
+                                          if (alturaDeJoelho == '') {
+                                            return "Campo Obrigatório";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                if (isEstimativaAlturaChecked)
+                                  Column(
+                                    children: [
+                                      MyTextField(
+                                        labelText: 'Altura do joelho em cm',
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        onChanged: (value) {
+                                          double? convertedValue =
+                                              double.tryParse(value);
+                                          setState(() {
+                                            _alturaDeJoelho =
+                                                convertedValue ?? 0.0;
+                                            _entradaAltura = 0.0;
+                                          });
+                                        },
+                                        validator: (alturaDeJoelho) {
+                                          if (alturaDeJoelho == '') {
+                                            return "Campo Obrigatório";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              FilledButton(
-                style:
-                    OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
-                onPressed: () {
-                  if (isEstimativaAlturaChecked) {
-                    _entradaAltura = altura_estimada(_selectedValueSexo,
-                        _selectedValueEtnia, _alturaDeJoelho, _entradaIdade);
-                  }
-                  if (isEstimativaPesoChecked) {
-                    _entradaPeso = peso_estimado(
-                        _selectedValueSexo,
-                        _selectedValueEtnia,
-                        _alturaDeJoelho,
-                        _circunferenciaDoBraco);
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return ResultadoTela(
-                        sexo: _selectedValueSexo,
-                        etnia: _selectedValueEtnia,
-                        idade: _entradaIdade,
-                        peso: _entradaPeso,
-                        fatorTermico: _selectedValueTemperatura,
-                        fatorAtividade: _selectedValueAtividade,
-                        fatorInjuria: _entradaInjuria,
-                        altura: _entradaAltura,
+                FilledButton(
+                  style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(200, 50)),
+                  onPressed: () {
+                    if (isEstimativaAlturaChecked) {
+                      _entradaAltura = altura_estimada(_selectedValueSexo,
+                          _selectedValueEtnia, _alturaDeJoelho, _entradaIdade);
+                    }
+                    if (isEstimativaPesoChecked) {
+                      _entradaPeso = peso_estimado(
+                          _selectedValueSexo,
+                          _selectedValueEtnia,
+                          _alturaDeJoelho,
+                          _circunferenciaDoBraco);
+                    }
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ResultadoTela(
+                            sexo: _selectedValueSexo,
+                            etnia: _selectedValueEtnia,
+                            idade: _entradaIdade,
+                            peso: _entradaPeso,
+                            fatorTermico: _selectedValueTemperatura,
+                            fatorAtividade: _selectedValueAtividade,
+                            fatorInjuria: _entradaInjuria,
+                            altura: _entradaAltura,
+                          );
+                        }),
                       );
-                    }),
-                  );
-                },
-                child: const Text(
-                  "Finalizar",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                    } else {}
+                  },
+                  child: const Text(
+                    "Finalizar",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
                 ),
-              ),
-
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void validate() {
+    _formKey.currentState!.validate();
   }
 }

@@ -58,7 +58,7 @@ class ResultadoTela extends StatelessWidget {
             Text('Altura: ${altura.toStringAsFixed(0)} cm'),
             Text('TMB: ${tmb.toStringAsFixed(2)}'),
             Text('GET: ${get.toStringAsFixed(2)}'),
-            MyFilledButton(),
+            const MyFilledButton(),
           ],
         ),
       ),

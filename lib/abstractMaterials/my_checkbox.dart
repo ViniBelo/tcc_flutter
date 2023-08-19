@@ -4,9 +4,11 @@ class MyCheckBox extends StatefulWidget {
   final bool? isChecked;
   final ValueSetter<bool?>? onChanged;
 
-  MyCheckBox({Key? key, this.onChanged, this.isChecked}) : super(key: key);
+  const MyCheckBox({Key? key, this.onChanged, this.isChecked})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyCheckBoxState createState() => _MyCheckBoxState();
 }
 

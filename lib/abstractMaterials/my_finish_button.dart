@@ -18,7 +18,8 @@ class MyFinishFormButton extends StatelessWidget {
   final double _entradaPeso;
   final double _entradaAltura;
 
-  MyFinishFormButton({
+  const MyFinishFormButton({
+    super.key,
     required this.isEstimativaAlturaChecked,
     required this.isEstimativaPesoChecked,
     required Sexo selectedValueSexo,
@@ -29,6 +30,8 @@ class MyFinishFormButton extends StatelessWidget {
     required double entradaInjuria,
     required double entradaPeso,
     required double entradaAltura,
+    double? alturaDeJoelho,
+    double? circunferenciaDoBraco,
   })  : _selectedValueSexo = selectedValueSexo,
         _selectedValueEtnia = selectedValueEtnia,
         _entradaIdade = entradaIdade,
@@ -43,7 +46,6 @@ class MyFinishFormButton extends StatelessWidget {
     return FilledButton(
       style: OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
       onPressed: () {
-        
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
