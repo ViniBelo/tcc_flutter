@@ -1,7 +1,7 @@
 enum Sexo {
   nenhum(sexo: ''),
-  homem(sexo: 'Homem'),
-  mulher(sexo: 'Mulher');
+  masculino(sexo: 'Masculino'),
+  feminino(sexo: 'Feminino');
 
   const Sexo({required this.sexo});
 

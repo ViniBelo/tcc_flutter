@@ -6,7 +6,7 @@ import '../models/formules/estimatives/peso_estimado.dart';
 double peso_estimado(Sexo sexo, Etnia etnia, double alturaDoJoelho,
     double circunferenciaDoBraco) {
   switch (sexo) {
-    case Sexo.homem:
+    case Sexo.masculino:
       switch (etnia) {
         case Etnia.branco:
           return peso_homem_branco(alturaDoJoelho, circunferenciaDoBraco);
@@ -15,7 +15,7 @@ double peso_estimado(Sexo sexo, Etnia etnia, double alturaDoJoelho,
         default:
           return 0;
       }
-    case Sexo.mulher:
+    case Sexo.feminino:
       switch (etnia) {
         case Etnia.branco:
           return peso_homem_branco(alturaDoJoelho, circunferenciaDoBraco);

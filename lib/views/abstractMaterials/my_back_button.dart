@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../meu_app.dart';
+import '../../meu_app.dart';
 
 class MyFilledButton extends StatelessWidget {
   const MyFilledButton({super.key});
@@ -45,7 +45,10 @@ class MyFilledButton extends StatelessWidget {
             Navigator.of(context).pop();
           }
         },
-        child: const Text('Refazer cálculos'),
+        child: const Text(
+          'Refazer cálculos',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

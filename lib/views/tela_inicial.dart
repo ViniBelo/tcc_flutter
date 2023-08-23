@@ -1,11 +1,11 @@
 // ignore_for_file: unrelated_type_equality_checks
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:estudos_flutter/abstractMaterials/my_text_field.dart';
+import 'package:estudos_flutter/views/abstractMaterials/my_text_field.dart';
 import 'package:estudos_flutter/views/tela_final.dart';
 import 'package:flutter/services.dart';
 
-import '../abstractMaterials/my_checkbox.dart';
-import '../abstractMaterials/my_dropdown_button.dart';
+import 'abstractMaterials/my_checkbox.dart';
+import 'abstractMaterials/my_dropdown_button.dart';
 import 'package:estudos_flutter/models/enums/etnia.dart';
 import 'package:estudos_flutter/models/enums/fator_atividade.dart';
 import 'package:estudos_flutter/models/enums/sexo.dart';
@@ -45,8 +45,6 @@ class _TelaInicialState extends State<TelaInicial> {
   TextEditingController temperaturaInputController = TextEditingController();
   TextEditingController atividadeInputController = TextEditingController();
 
-  
-
   bool isEstimativaPesoChecked = false;
   bool isEstimativaAlturaChecked = false;
 
@@ -64,7 +62,7 @@ class _TelaInicialState extends State<TelaInicial> {
       mask: '###',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
-  
+
   var maskIdadeFormatter = MaskTextInputFormatter(
       mask: '###',
       filter: {"#": RegExp(r'[0-9]')},
@@ -112,8 +110,8 @@ class _TelaInicialState extends State<TelaInicial> {
                                 values: Sexo.values,
                                 labels: const [
                                   'Selecione uma opção',
-                                  'Homem',
-                                  'Mulher'
+                                  'Masculino',
+                                  'Feminino'
                                 ],
                                 context: context,
                                 onChanged: (value) {
@@ -164,14 +162,10 @@ class _TelaInicialState extends State<TelaInicial> {
                           Column(
                             children: [
                               MyTextField(
-                                maskTextInputFormatter:
-                                    maskIdadeFormatter,
+                                maskTextInputFormatter: maskIdadeFormatter,
                                 controller: idadeInputController,
                                 labelText: 'Idade',
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
                                 onChanged: (value) {
                                   int? convertedValue = int.tryParse(value);
                                   setState(() {
@@ -184,6 +178,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   }
                                   return null;
                                 },
+                                icon: null,
                               )
                             ],
                           ),
@@ -209,14 +204,10 @@ class _TelaInicialState extends State<TelaInicial> {
                                 Column(
                                   children: [
                                     MyTextField(
-                                      maskTextInputFormatter:
-                                          maskPesoFormatter,
+                                      maskTextInputFormatter: maskPesoFormatter,
                                       controller: pesoInputController,
                                       labelText: 'Peso em kg',
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
                                       onChanged: (value) {
                                         double? convertedValue =
                                             double.tryParse(value);
@@ -230,6 +221,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                         }
                                         return null;
                                       },
+                                      icon: null,
                                     ),
                                   ],
                                 ),
@@ -246,10 +238,6 @@ class _TelaInicialState extends State<TelaInicial> {
                                                 alturaJoelhoInputController,
                                             labelText: 'Altura do joelho em cm',
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
                                             onChanged: (value) {
                                               double? convertedValue =
                                                   double.tryParse(value);
@@ -265,6 +253,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                               }
                                               return null;
                                             },
+                                            icon: null,
                                           ),
                                         ],
                                       ),
@@ -280,10 +269,6 @@ class _TelaInicialState extends State<TelaInicial> {
                                             labelText:
                                                 'Circunferência do braço em cm',
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
                                             onChanged: (value) {
                                               double? convertedValue =
                                                   double.tryParse(value);
@@ -299,6 +284,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                               }
                                               return null;
                                             },
+                                            icon: null,
                                           ),
                                         ],
                                       ),
@@ -386,10 +372,6 @@ class _TelaInicialState extends State<TelaInicial> {
                                 controller: fatorInjuriaInputController,
                                 labelText: 'Fator injúria',
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  maskFatorInjuriaFormatter,
-                                ],
                                 onChanged: (value) {
                                   double? convertedValue =
                                       double.tryParse(value);
@@ -397,15 +379,18 @@ class _TelaInicialState extends State<TelaInicial> {
                                     _entradaInjuria = convertedValue ?? 0.0;
                                   });
                                 },
-                                validator: (entradaInjuria){
-                                  var convertedEntradaInjuria = double.tryParse(entradaInjuria);
+                                validator: (entradaInjuria) {
+                                  var convertedEntradaInjuria =
+                                      double.tryParse(entradaInjuria);
                                   if (entradaInjuria == '') {
                                     return "Campo Obrigatório";
-                                  } else if (convertedEntradaInjuria! > 2.00 || convertedEntradaInjuria < 0.50) {
+                                  } else if (convertedEntradaInjuria! > 2.00 ||
+                                      convertedEntradaInjuria < 0.50) {
                                     return "O fator injúria deve estar no intervalo entre 0.50 e 2.00";
                                   }
                                   return null;
                                 },
+                                icon: Icons.list,
                                 maskTextInputFormatter:
                                     maskFatorInjuriaFormatter,
                               ),
@@ -438,9 +423,6 @@ class _TelaInicialState extends State<TelaInicial> {
                                       controller: alturaInputController,
                                       labelText: 'Altura em cm',
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
                                       onChanged: (value) {
                                         double? convertedValue =
                                             double.tryParse(value);
@@ -456,6 +438,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                         }
                                         return null;
                                       },
+                                      icon: null,
                                     ),
                                   ],
                                 ),
@@ -468,9 +451,6 @@ class _TelaInicialState extends State<TelaInicial> {
                                       controller: alturaJoelhoInputController,
                                       labelText: 'Altura do joelho em cm',
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
                                       onChanged: (value) {
                                         double? convertedValue =
                                             double.tryParse(value);
@@ -486,6 +466,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                         }
                                         return null;
                                       },
+                                      icon: null,
                                     ),
                                   ],
                                 ),
@@ -501,17 +482,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 style:
                     OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
                 onPressed: () {
-                  if (isEstimativaAlturaChecked) {
-                    _entradaAltura = altura_estimada(_selectedValueSexo,
-                        _selectedValueEtnia, _alturaDeJoelho, _entradaIdade);
-                  }
-                  if (isEstimativaPesoChecked) {
-                    _entradaPeso = peso_estimado(
-                        _selectedValueSexo,
-                        _selectedValueEtnia,
-                        _alturaDeJoelho,
-                        _circunferenciaDoBraco);
-                  }
                   if (_formKey.currentState!.validate()) {
                     Navigator.push(
                       context,
@@ -541,6 +511,10 @@ class _TelaInicialState extends State<TelaInicial> {
                           fatorInjuria:
                               double.parse(fatorInjuriaInputController.text),
                           altura: double.parse(alturaInputController.text),
+                          alturaDoJoelho: _alturaDeJoelho,
+                          circunferenciaDoBraco: _circunferenciaDoBraco,
+                          isEstimativaAlturaChecked: isEstimativaAlturaChecked,
+                          isEstimativaPesoChecked: isEstimativaPesoChecked,
                         );
                       }),
                     );
@@ -551,7 +525,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
             ],
           ),
         ),

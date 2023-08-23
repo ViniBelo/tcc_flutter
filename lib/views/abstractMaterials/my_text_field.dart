@@ -1,5 +1,5 @@
+import 'package:estudos_flutter/views/tela_fator_injuria.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/text_formatter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class MyTextField extends StatefulWidget {
@@ -9,6 +9,7 @@ class MyTextField extends StatefulWidget {
   final FormFieldValidator validator;
   final TextEditingController controller;
   final MaskTextInputFormatter maskTextInputFormatter;
+  final IconData? icon;
 
   const MyTextField({
     super.key,
@@ -17,7 +18,7 @@ class MyTextField extends StatefulWidget {
     required this.keyboardType,
     required this.onChanged,
     required this.validator,
-    List<TextInputFormatter>? inputFormatters,
+    required this.icon,
     required this.maskTextInputFormatter,
   });
 
@@ -32,9 +33,31 @@ class _MyTextFieldState extends State<MyTextField> {
     return SizedBox(
       child: Column(
         children: [
-          Text(
-            widget.labelText,
-            style: const TextStyle(fontSize: 16),
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.labelText,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                if (widget.icon != null)
+                  IconButton(
+                      color: Colors.blue,
+                      onPressed: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return const FatorInjuriaTela();
+                            }),
+                          );
+                        });
+                      },
+                      icon: Icon(widget.icon)),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 40, right: 40),

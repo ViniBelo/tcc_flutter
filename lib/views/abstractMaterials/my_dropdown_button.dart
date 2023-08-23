@@ -29,9 +29,11 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
     widget.controller.text = widget.selectedValue.toString();
   }
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: (MediaQuery.of(context).size.width / 3) + (MediaQuery.of(context).size.width / 11),
+      width: (MediaQuery.of(context).size.width / 3) +
+          (MediaQuery.of(context).size.width / 11),
       child: DropdownButtonFormField<T>(
         value: widget.selectedValue,
         validator: widget.validator,
@@ -39,15 +41,24 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
           widget.controller.text = newValue.toString();
           widget.onChanged(newValue);
         },
+        isExpanded: true,
         borderRadius: BorderRadius.circular(10.0),
+        decoration: const InputDecoration(),
         items: widget.values.asMap().entries.map((entry) {
           int index = entry.key;
           T value = entry.value;
           String label = widget.labels[index];
           return DropdownMenuItem<T>(
             value: value,
-            child: Text(
-                label), // Usar o rótulo personalizado em vez do valor bruto do T
+            child: Center(
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.5,
+                ),
+              ),
+            ),
           );
         }).toList(),
       ),
