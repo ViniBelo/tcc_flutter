@@ -45,6 +45,8 @@ class _TelaInicialState extends State<TelaInicial> {
   TextEditingController temperaturaInputController = TextEditingController();
   TextEditingController atividadeInputController = TextEditingController();
 
+  
+
   bool isEstimativaPesoChecked = false;
   bool isEstimativaAlturaChecked = false;
 
@@ -59,6 +61,11 @@ class _TelaInicialState extends State<TelaInicial> {
       type: MaskAutoCompletionType.lazy);
 
   var maskAlturaFormatter = MaskTextInputFormatter(
+      mask: '###',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+  
+  var maskIdadeFormatter = MaskTextInputFormatter(
       mask: '###',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
@@ -158,7 +165,7 @@ class _TelaInicialState extends State<TelaInicial> {
                             children: [
                               MyTextField(
                                 maskTextInputFormatter:
-                                    maskFatorInjuriaFormatter,
+                                    maskIdadeFormatter,
                                 controller: idadeInputController,
                                 labelText: 'Idade',
                                 keyboardType: TextInputType.number,
@@ -203,7 +210,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   children: [
                                     MyTextField(
                                       maskTextInputFormatter:
-                                          maskFatorInjuriaFormatter,
+                                          maskPesoFormatter,
                                       controller: pesoInputController,
                                       labelText: 'Peso em kg',
                                       keyboardType: TextInputType.number,
@@ -234,7 +241,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                         children: [
                                           MyTextField(
                                             maskTextInputFormatter:
-                                                maskFatorInjuriaFormatter,
+                                                maskAlturaFormatter,
                                             controller:
                                                 alturaJoelhoInputController,
                                             labelText: 'Altura do joelho em cm',
@@ -267,7 +274,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                         children: [
                                           MyTextField(
                                             maskTextInputFormatter:
-                                                maskFatorInjuriaFormatter,
+                                                maskPesoFormatter,
                                             controller:
                                                 circunferenciaBracoInputController,
                                             labelText:
@@ -380,31 +387,22 @@ class _TelaInicialState extends State<TelaInicial> {
                                 labelText: 'Fator injúria',
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  maskFatorInjuriaFormatter,
                                 ],
                                 onChanged: (value) {
                                   double? convertedValue =
                                       double.tryParse(value);
-                                  if (convertedValue != null) {
-                                    // Limitar o valor entre 0.50 e 2.00
-                                    if (convertedValue <= 0.50) {
-                                      convertedValue = 0.50;
-                                    } else if (convertedValue >= 2.00) {
-                                      convertedValue = 2.00;
-                                    }
-                                  }
-
-                                  // Atualizar o texto no controlador
-                                  fatorInjuriaInputController.text =
-                                      convertedValue.toString();
-
                                   setState(() {
                                     _entradaInjuria = convertedValue ?? 0.0;
                                   });
                                 },
-                                validator: (circunferenciaDoBraco) {
-                                  if (circunferenciaDoBraco == '') {
+                                validator: (entradaInjuria){
+                                  var convertedEntradaInjuria = double.tryParse(entradaInjuria);
+                                  if (entradaInjuria == '') {
                                     return "Campo Obrigatório";
+                                  } else if (convertedEntradaInjuria! > 2.00 || convertedEntradaInjuria < 0.50) {
+                                    return "O fator injúria deve estar no intervalo entre 0.50 e 2.00";
                                   }
                                   return null;
                                 },
@@ -436,7 +434,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   children: [
                                     MyTextField(
                                       maskTextInputFormatter:
-                                          maskFatorInjuriaFormatter,
+                                          maskAlturaFormatter,
                                       controller: alturaInputController,
                                       labelText: 'Altura em cm',
                                       keyboardType: TextInputType.number,
@@ -466,7 +464,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   children: [
                                     MyTextField(
                                       maskTextInputFormatter:
-                                          maskFatorInjuriaFormatter,
+                                          maskAlturaFormatter,
                                       controller: alturaJoelhoInputController,
                                       labelText: 'Altura do joelho em cm',
                                       keyboardType: TextInputType.number,

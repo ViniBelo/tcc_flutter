@@ -46,18 +46,33 @@ class ResultadoTela extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Sexo: ${sexo.sexo}'),
-            Text('Raça / Etnia: ${etnia.etnia}'),
-            Text('Idade: ${idade.toString()}'),
-            Text('Peso: ${peso.toStringAsFixed(2)} kg'),
-            Text(
-                'Temperatura Corporal: ${fatorTermico.temperatura}, valor: ${fatorTermico.fatorTermico}'),
-            Text(
-                'Fator Atividade: ${fatorAtividade.atividade}, valor: ${fatorAtividade.fatorAtividade}'),
-            Text('Fator Injúria: ${fatorInjuria.toString()}'),
-            Text('Altura: ${altura.toStringAsFixed(0)} cm'),
-            Text('TMB: ${tmb.toStringAsFixed(2)}'),
-            Text('GET: ${get.toStringAsFixed(2)}'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Sexo: ${sexo.sexo}', style: (TextStyle(fontSize: 30)),),
+                    Text('Raça / Etnia: ${etnia.etnia}', style: (TextStyle(fontSize: 30)),),
+                    Text('Idade: ${idade.toString()}', style: (TextStyle(fontSize: 30)),),
+                    Text('Peso: ${peso.toStringAsFixed(2)} kg', style: (TextStyle(fontSize: 30)),),
+                    Text(
+                        'Temperatura Corporal: ${fatorTermico.temperatura}, valor: ${fatorTermico.fatorTermico}', style: (TextStyle(fontSize: 30)),),
+                  ],
+                ),
+                Column(
+              children: [
+                Text('Fator Injúria: ${fatorInjuria.toString()}', style: (TextStyle(fontSize: 30)),),
+                Text('Altura: ${altura.toStringAsFixed(0)} cm', style: (TextStyle(fontSize: 30)),),
+                Text('TMB: ${tmb.toStringAsFixed(2)}', style: (TextStyle(fontSize: 30)),),
+                Text('GET: ${get.toStringAsFixed(2)}', style: (TextStyle(fontSize: 30)),),
+                Text(
+                    'Fator Atividade: ${fatorAtividade.atividade}, valor: ${fatorAtividade.fatorAtividade}', style: (TextStyle(fontSize: 30)),),
+              ],
+            ),
+              ],
+            ),
+            
             const MyFilledButton(),
           ],
         ),

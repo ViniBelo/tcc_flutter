@@ -31,7 +31,7 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
 
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 3,
+      width: (MediaQuery.of(context).size.width / 3) + (MediaQuery.of(context).size.width / 11),
       child: DropdownButtonFormField<T>(
         value: widget.selectedValue,
         validator: widget.validator,
