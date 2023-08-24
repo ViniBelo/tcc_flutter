@@ -177,8 +177,14 @@ class _TelaInicialState extends State<TelaInicial> {
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {},
                                   validator: (entradaIdade) {
+                                    var convertedEntradaIdade =
+                                        double.tryParse(entradaIdade);
                                     if (entradaIdade == '') {
                                       return "Campo Obrigatório";
+                                    } else if (convertedEntradaIdade! >
+                                            130 ||
+                                        convertedEntradaIdade < 18) {
+                                      return "A idade deve estar no intervalo entre 18 e 130";
                                     }
                                     return null;
                                   },

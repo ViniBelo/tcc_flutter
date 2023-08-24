@@ -46,6 +46,7 @@ class ResultadoTela extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ResultadoTelaState createState() => _ResultadoTelaState();
 }
 
@@ -89,6 +90,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
         title: const Text('Resultado'),
       ),
       body: Container(
+            height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

@@ -9,6 +9,7 @@ class MyFilledButton extends StatelessWidget {
     return showDialog<bool?>(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFFEAFCE0),
         title: const Text('Você tem certeza?'),
         content: const Text(
             'Você irá voltar para a tela anterior e todos os dados serão apagados'),
@@ -52,8 +53,8 @@ class MyFilledButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.delete, color: Colors.white), // Ícone do lado esquerdo
-            SizedBox(width: 8), // Espaço entre o ícone e o texto
+            Icon(Icons.delete, color: Colors.white),
+            SizedBox(width: 8),
             Text(
               "Refazer cálculos",
               style: TextStyle(
