@@ -37,7 +37,10 @@ class MyFilledButton extends StatelessWidget {
       width: 200,
       height: 50,
       child: FilledButton(
-        style: OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
+        style: OutlinedButton.styleFrom(
+          minimumSize: const Size(200, 50),
+          backgroundColor: Colors.green,
+        ),
         onPressed: () async {
           bool? shouldPop = await _onBackPressed(context);
           if (shouldPop == true) {
@@ -45,9 +48,20 @@ class MyFilledButton extends StatelessWidget {
             Navigator.of(context).pop();
           }
         },
-        child: const Text(
-          'Refazer cálculos',
-          style: TextStyle(fontSize: 18),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.delete, color: Colors.white), // Ícone do lado esquerdo
+            SizedBox(width: 8), // Espaço entre o ícone e o texto
+            Text(
+              "Refazer cálculos",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white),
+            ),
+          ],
         ),
       ),
     );

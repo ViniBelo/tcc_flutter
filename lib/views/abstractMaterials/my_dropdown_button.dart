@@ -35,6 +35,8 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
       width: (MediaQuery.of(context).size.width / 3) +
           (MediaQuery.of(context).size.width / 11),
       child: DropdownButtonFormField<T>(
+        dropdownColor: // Um tom de verde pastel muito claro
+            const Color(0xFFF1FFD6),
         value: widget.selectedValue,
         validator: widget.validator,
         onChanged: (newValue) {

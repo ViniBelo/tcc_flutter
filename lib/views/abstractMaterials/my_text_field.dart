@@ -1,4 +1,4 @@
-import 'package:estudos_flutter/views/tela_fator_injuria.dart';
+import 'package:estudos_flutter/views/screens/tela_fator_injuria.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -44,7 +44,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 ),
                 if (widget.icon != null)
                   IconButton(
-                      color: Colors.blue,
+                      color: Colors.green,
                       onPressed: () {
                         setState(() {
                           Navigator.push(
