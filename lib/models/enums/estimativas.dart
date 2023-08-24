@@ -1,10 +1,12 @@
 enum Estimativas {
-  homemBranco(imageAdress: 'assets/images/hHomemBranco.png'),
-  homemNegro(imageAdress: 'assets/images/hHomemNegro.png'),
-  mulherBranca(imageAdress: 'assets/images/hMulherBranca.png'),
-  mulherNegra(imageAdress: 'assets/images/hMulherNegra.png');
+  homemBranco(imageAdressAltura: 'assets/images/hHomemBranco.png', imageAdressPeso: 'assets/images/wHomemBranco.png'),
+  homemNegro(imageAdressAltura: 'assets/images/hHomemNegro.png', imageAdressPeso: 'assets/images/wHomemNegro.png'),
+  mulherBranca(imageAdressAltura: 'assets/images/hMulherBranca.png', imageAdressPeso: 'assets/images/wMulherBranca.png'),
+  mulherNegra(imageAdressAltura: 'assets/images/hMulherNegra.png', imageAdressPeso: 'assets/images/wMulherNegra.png');
 
-  const Estimativas({required this.imageAdress});
+  const Estimativas({required this.imageAdressAltura, required this.imageAdressPeso});
 
-  final String imageAdress;
+  final String imageAdressAltura;
+  final String imageAdressPeso;
+
 }

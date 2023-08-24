@@ -2,7 +2,6 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:estudos_flutter/views/abstractMaterials/my_text_field.dart';
 import 'package:estudos_flutter/views/tela_final.dart';
-import 'package:flutter/services.dart';
 
 import 'abstractMaterials/my_checkbox.dart';
 import 'abstractMaterials/my_dropdown_button.dart';
@@ -11,9 +10,6 @@ import 'package:estudos_flutter/models/enums/fator_atividade.dart';
 import 'package:estudos_flutter/models/enums/sexo.dart';
 import 'package:estudos_flutter/models/enums/temperatura_corporal.dart';
 import 'package:flutter/material.dart';
-
-import '../controllers/altura_estimada.dart';
-import '../controllers/peso_estimado.dart';
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -27,12 +23,6 @@ class _TelaInicialState extends State<TelaInicial> {
   Etnia _selectedValueEtnia = Etnia.nenhum;
   TemperaturaCorporal _selectedValueTemperatura = TemperaturaCorporal.nenhum;
   FatorAtividade _selectedValueAtividade = FatorAtividade.nenhum;
-  int _entradaIdade = 0;
-  double _entradaInjuria = 0.0;
-  double _entradaPeso = 0.0;
-  double _entradaAltura = 0.0;
-  double _alturaDeJoelho = 0.0;
-  double _circunferenciaDoBraco = 0.0;
   TextEditingController idadeInputController = TextEditingController();
   TextEditingController pesoInputController = TextEditingController();
   TextEditingController alturaJoelhoInputController = TextEditingController();
@@ -60,6 +50,11 @@ class _TelaInicialState extends State<TelaInicial> {
 
   var maskAlturaFormatter = MaskTextInputFormatter(
       mask: '###',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  var maskAlturaDoJoelhoFormatter = MaskTextInputFormatter(
+      mask: '##.##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
@@ -167,10 +162,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                 labelText: 'Idade',
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  int? convertedValue = int.tryParse(value);
-                                  setState(() {
-                                    _entradaIdade = convertedValue ?? 0;
-                                  });
+                                  
                                 },
                                 validator: (entradaIdade) {
                                   if (entradaIdade == '') {
@@ -209,11 +201,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                       labelText: 'Peso em kg',
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _entradaPeso = convertedValue ?? 0.0;
-                                        });
+                                        
                                       },
                                       validator: (entradaPeso) {
                                         if (entradaPeso == '') {
@@ -233,22 +221,16 @@ class _TelaInicialState extends State<TelaInicial> {
                                         children: [
                                           MyTextField(
                                             maskTextInputFormatter:
-                                                maskAlturaFormatter,
+                                                maskAlturaDoJoelhoFormatter,
                                             controller:
                                                 alturaJoelhoInputController,
                                             labelText: 'Altura do joelho em cm',
                                             keyboardType: TextInputType.number,
                                             onChanged: (value) {
-                                              double? convertedValue =
-                                                  double.tryParse(value);
-                                              setState(() {
-                                                _alturaDeJoelho =
-                                                    convertedValue ?? 0.0;
-                                                _entradaPeso = 0.0;
-                                              });
+                                              
                                             },
-                                            validator: (alturaDeJoelho) {
-                                              if (alturaDeJoelho == '') {
+                                            validator: (alturaDoJoelho) {
+                                              if (alturaDoJoelho == '') {
                                                 return "Campo obrigatorio";
                                               }
                                               return null;
@@ -270,13 +252,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                                 'Circunferência do braço em cm',
                                             keyboardType: TextInputType.number,
                                             onChanged: (value) {
-                                              double? convertedValue =
-                                                  double.tryParse(value);
-                                              setState(() {
-                                                _circunferenciaDoBraco =
-                                                    convertedValue ?? 0.0;
-                                                _entradaPeso = 0.0;
-                                              });
+                                              
                                             },
                                             validator: (circunferenciaDoBraco) {
                                               if (circunferenciaDoBraco == '') {
@@ -373,11 +349,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                 labelText: 'Fator injúria',
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  double? convertedValue =
-                                      double.tryParse(value);
-                                  setState(() {
-                                    _entradaInjuria = convertedValue ?? 0.0;
-                                  });
+                                  
                                 },
                                 validator: (entradaInjuria) {
                                   var convertedEntradaInjuria =
@@ -424,13 +396,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                       labelText: 'Altura em cm',
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _entradaAltura =
-                                              convertedValue ?? 0.0;
-                                          _alturaDeJoelho = 0.0;
-                                        });
+                                        
                                       },
                                       validator: (value) {
                                         if (value == '') {
@@ -452,16 +418,10 @@ class _TelaInicialState extends State<TelaInicial> {
                                       labelText: 'Altura do joelho em cm',
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {
-                                        double? convertedValue =
-                                            double.tryParse(value);
-                                        setState(() {
-                                          _alturaDeJoelho =
-                                              convertedValue ?? 0.0;
-                                          _entradaAltura = 0.0;
-                                        });
+                                        
                                       },
-                                      validator: (alturaDeJoelho) {
-                                        if (alturaDeJoelho == '') {
+                                      validator: (alturaDoJoelho) {
+                                        if (alturaDoJoelho == '') {
                                           return "Campo Obrigatório";
                                         }
                                         return null;
@@ -497,7 +457,6 @@ class _TelaInicialState extends State<TelaInicial> {
                             orElse: () => Etnia.nenhum,
                           ),
                           idade: int.parse(idadeInputController.text),
-                          peso: double.parse(pesoInputController.text),
                           fatorTermico: TemperaturaCorporal.values.firstWhere(
                             (e) =>
                                 e.toString() == temperaturaInputController.text,
@@ -510,9 +469,10 @@ class _TelaInicialState extends State<TelaInicial> {
                           ),
                           fatorInjuria:
                               double.parse(fatorInjuriaInputController.text),
-                          altura: double.parse(alturaInputController.text),
-                          alturaDoJoelho: _alturaDeJoelho,
-                          circunferenciaDoBraco: _circunferenciaDoBraco,
+                          peso: pesoInputController,
+                          altura: alturaInputController,
+                          alturaDoJoelho: alturaJoelhoInputController,
+                          circunferenciaDoBraco: circunferenciaBracoInputController,
                           isEstimativaAlturaChecked: isEstimativaAlturaChecked,
                           isEstimativaPesoChecked: isEstimativaPesoChecked,
                         );

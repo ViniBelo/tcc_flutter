@@ -66,8 +66,13 @@ flutter:
     - assets/images/hHomemNegro.png
     - assets/images/hMulherBranca.png
     - assets/images/hMulherNegra.png
-    - assets/images/tmb.png
+    - assets/images/tmbHomem.png
+    - assets/images/tmbMulher.png
     - assets/images/get.png
+    - assets/images/wHomemBranco.png
+    - assets/images/wHomemNegro.png
+    - assets/images/wMulherBranca.png
+    - assets/images/wMulherNegra.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

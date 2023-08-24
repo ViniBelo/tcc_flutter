@@ -1,4 +1,6 @@
-import 'package:estudos_flutter/controllers/estimativa_utilizada.dart';
+import 'package:estudos_flutter/controllers/estimativa_altura_utilizada.dart';
+import 'package:estudos_flutter/controllers/estimativa_peso_utilizada.dart';
+import 'package:estudos_flutter/controllers/tmb_utilizada.dart';
 import 'package:estudos_flutter/controllers/validators/valida_altura.dart';
 import 'package:estudos_flutter/controllers/validators/valida_peso.dart';
 import 'package:estudos_flutter/views/abstractMaterials/my_back_button.dart';
@@ -6,22 +8,24 @@ import 'package:estudos_flutter/controllers/taxa_metabolica_basal.dart';
 import 'package:estudos_flutter/models/formules/formula_get.dart';
 import 'package:flutter/material.dart';
 
+import '../controllers/altura_do_joelho.dart';
+import '../controllers/circunferencia_do_braco.dart';
 import '../models/enums/etnia.dart';
 import '../models/enums/fator_atividade.dart';
 import '../models/enums/sexo.dart';
 import '../models/enums/temperatura_corporal.dart';
 
-class ResultadoTela extends StatelessWidget {
+class ResultadoTela extends StatefulWidget {
   final Sexo sexo;
   final Etnia etnia;
   final int idade;
-  final double peso;
+  final TextEditingController peso;
+  final TextEditingController altura;
+  final TextEditingController alturaDoJoelho;
+  final TextEditingController circunferenciaDoBraco;
   final TemperaturaCorporal fatorTermico;
   final FatorAtividade fatorAtividade;
   final double fatorInjuria;
-  final double altura;
-  final double alturaDoJoelho;
-  final double circunferenciaDoBraco;
   final bool isEstimativaAlturaChecked;
   final bool isEstimativaPesoChecked;
 
@@ -41,14 +45,23 @@ class ResultadoTela extends StatelessWidget {
     required this.isEstimativaPesoChecked,
   }) : super(key: key);
 
-  double get tmb => formula_tmb(sexo, peso, altura, idade);
-  double get get =>
-      formula_get(tmb, fatorAtividade, fatorInjuria, fatorTermico);
-  String get estimativaUtilizada => estimativas_utilizadas(sexo, etnia);
-  double get pesoFinal => valida_peso(sexo, etnia, peso, alturaDoJoelho,
-      circunferenciaDoBraco, isEstimativaPesoChecked);
+  @override
+  _ResultadoTelaState createState() => _ResultadoTelaState();
+}
+
+class _ResultadoTelaState extends State<ResultadoTela> {
+  double get pesoFinal => valida_peso(widget.sexo, widget.etnia, widget.peso, widget.alturaDoJoelho,
+      widget.circunferenciaDoBraco, widget.isEstimativaPesoChecked);
   double get alturaFinal => valida_altura(
-      sexo, etnia, altura, alturaDoJoelho, idade, isEstimativaAlturaChecked);
+      widget.sexo, widget.etnia, widget.altura, widget.alturaDoJoelho, widget.idade, widget.isEstimativaAlturaChecked);
+  double get tmb => formula_tmb(widget.sexo, pesoFinal, alturaFinal, widget.idade);
+  double get get =>
+      formula_get(tmb, widget.fatorAtividade, widget.fatorInjuria, widget.fatorTermico);
+  double get alturaDoJoelhoFinal => altura_do_joelho(widget.alturaDoJoelho, widget.isEstimativaAlturaChecked, widget.isEstimativaPesoChecked);
+  double get circunferenciaDoBracoFinal => circunferencia_do_braco(widget.circunferenciaDoBraco, widget.isEstimativaPesoChecked);
+  String get tmbUtilizada => tmb_utilizada(widget.sexo);
+  String get estimativaAlturaUtilizada => estimativa_altura_utilizada(widget.sexo, widget.etnia);
+  String get estimativaPesoUtilizada => estimativa_peso_utilizada(widget.sexo, widget.etnia);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +76,7 @@ class ResultadoTela extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 30),
               child: Text(
                 'Valores inseridos:',
                 style: TextStyle(fontSize: 35),
@@ -79,24 +92,24 @@ class ResultadoTela extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Sexo: ${sexo.sexo}',
+                            'Sexo: ${widget.sexo.sexo}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Idade: ${idade.toString()}',
+                            'Idade: ${widget.idade.toString()}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
                             'Peso: ${pesoFinal.toStringAsFixed(2)} kg',
                             style: (const TextStyle(fontSize: 30)),
                           ),
-                          if (isEstimativaPesoChecked)
+                          if (widget.isEstimativaPesoChecked)
                             Text(
-                              'Circunferência do braço: ${circunferenciaDoBraco.toStringAsFixed(2)}',
+                              'Circunferência do braço: ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                           Text(
-                            'Temperatura Corporal: ${fatorTermico.temperatura}, valor: ${fatorTermico.fatorTermico}',
+                            'Temperatura Corporal: ${widget.fatorTermico.temperatura}, valor: ${widget.fatorTermico.fatorTermico}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
@@ -108,25 +121,25 @@ class ResultadoTela extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            'Fator Injúria: ${fatorInjuria.toString()}',
+                            'Fator Injúria: ${widget.fatorInjuria.toString()}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Raça / Etnia: ${etnia.etnia}',
+                            'Raça / Etnia: ${widget.etnia.etnia}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
                             'Altura: ${alturaFinal.toStringAsFixed(0)} cm',
                             style: (const TextStyle(fontSize: 30)),
                           ),
-                          if (isEstimativaAlturaChecked ||
-                              isEstimativaPesoChecked)
+                          if (widget.isEstimativaAlturaChecked ||
+                              widget.isEstimativaPesoChecked)
                             Text(
-                              'Altura do joelho: ${alturaDoJoelho.toStringAsFixed(2)}',
+                              'Altura do joelho: ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                           Text(
-                            'Fator Atividade: ${fatorAtividade.atividade}, valor: ${fatorAtividade.fatorAtividade}',
+                            'Fator Atividade: ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
@@ -138,65 +151,62 @@ class ResultadoTela extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                  return Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Sexo: ${widget.sexo.sexo}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'Idade: ${widget.idade.toString()}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'Peso: ${pesoFinal.toStringAsFixed(2)} kg',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        if (widget.isEstimativaPesoChecked)
                           Text(
-                            'Sexo: ${sexo.sexo}',
+                            'Circunferência do braço: ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
                             style: (const TextStyle(fontSize: 30)),
                           ),
+                        Text(
+                          'Altura: ${alturaFinal.toStringAsFixed(0)} cm',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        if (widget.isEstimativaAlturaChecked ||
+                            widget.isEstimativaPesoChecked)
                           Text(
-                            'Idade: ${idade.toString()}',
+                            'Altura do joelho: ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
                             style: (const TextStyle(fontSize: 30)),
                           ),
-                          Text(
-                            'Peso: ${pesoFinal.toStringAsFixed(2)} kg',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          if (isEstimativaPesoChecked)
-                            Text(
-                              'Circunferência do braço: ${circunferenciaDoBraco.toStringAsFixed(2)}',
-                              style: (const TextStyle(fontSize: 30)),
-                            ),
-                          Text(
-                            'Temperatura Corporal: ${fatorTermico.temperatura}, valor: ${fatorTermico.fatorTermico}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          Text(
-                            'TMB: ${tmb.toStringAsFixed(2)}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          Text(
-                            'Fator Injúria: ${fatorInjuria.toString()}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          Text(
-                            'Raça / Etnia: ${etnia.etnia}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          Text(
-                            'Altura: ${alturaFinal.toStringAsFixed(0)} cm',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          if (isEstimativaAlturaChecked ||
-                              isEstimativaPesoChecked)
-                            Text(
-                              'Altura do joelho: ${alturaDoJoelho.toStringAsFixed(2)}',
-                              style: (const TextStyle(fontSize: 30)),
-                            ),
-                          Text(
-                            'Fator Atividade: ${fatorAtividade.atividade}, valor: ${fatorAtividade.fatorAtividade}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                          Text(
-                            'GET: ${get.toStringAsFixed(2)}',
-                            style: (const TextStyle(fontSize: 30)),
-                          ),
-                        ],
-                      ),
-                    ],
+                        Text(
+                          'Fator Injúria: ${widget.fatorInjuria.toString()}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'Raça / Etnia: ${widget.etnia.etnia}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'Temperatura Corporal: ${widget.fatorTermico.temperatura}, valor: ${widget.fatorTermico.fatorTermico}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'Fator Atividade: ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'TMB: ${tmb.toStringAsFixed(2)}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                        Text(
+                          'GET: ${get.toStringAsFixed(2)}',
+                          style: (const TextStyle(fontSize: 30)),
+                        ),
+                      ],
+                    ),
                   );
                 }
               },
@@ -222,7 +232,7 @@ class ResultadoTela extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Image.asset('assets/images/tmb.png'),
+                      child: Image.asset(tmbUtilizada, scale: 0.5,),
                     ),
                   ],
                 ),
@@ -244,7 +254,7 @@ class ResultadoTela extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (isEstimativaAlturaChecked || isEstimativaPesoChecked)
+                if (widget.isEstimativaAlturaChecked || widget.isEstimativaPesoChecked)
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
@@ -252,36 +262,40 @@ class ResultadoTela extends StatelessWidget {
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
-                if (isEstimativaAlturaChecked || isEstimativaPesoChecked)
+                if (widget.isEstimativaAlturaChecked || widget.isEstimativaPesoChecked)
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Image.asset(
-                      estimativaUtilizada,
-                      scale: 0.7,
+                      estimativaAlturaUtilizada,
+                      scale: 0.5,
                     ),
                   ),
-                if (isEstimativaPesoChecked)
+                if (widget.isEstimativaPesoChecked)
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
-                      'Peso estimada:',
+                      'Peso estimado:',
                       style: TextStyle(fontSize: 30),
                     ),
                   ),
-                if (isEstimativaPesoChecked)
+                if (widget.isEstimativaPesoChecked)
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Image.asset(
-                      estimativaUtilizada,
-                      scale: 0.7,
+                      estimativaPesoUtilizada,
+                      scale: 0.5,
                     ),
                   ),
               ],
             ),
-            const MyFilledButton(),
+            const Padding(
+              padding: EdgeInsets.only(top: 40.0, bottom: 70),
+              child: MyFilledButton(),
+            ),
           ],
         ),
       ),
     );
   }
 }
+

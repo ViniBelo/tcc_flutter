@@ -1,4 +1,4 @@
-#Tue Aug 22 21:48:27 BRT 2023
-base.0=C\:\\Users\\vinia\\OneDrive\\Documentos\\GitHub\\estudos_flutter\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Wed Aug 23 20:26:16 BRT 2023
+base.0=/home/vinibelo/Documentos/GitHub/estudos_flutter/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

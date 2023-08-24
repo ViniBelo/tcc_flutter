@@ -5,7 +5,7 @@ double peso_mulher_branca(double alturaDoJoelho, double circunferenciaDoBraco) {
 
 // ignore: non_constant_identifier_names
 double peso_mulher_negra(double alturaDoJoelho, double circunferenciaDoBraco) {
-  return ((alturaDoJoelho * 1.24) + (circunferenciaDoBraco * 2.97)) - 82.48;
+  return ((alturaDoJoelho * 1.24) + (circunferenciaDoBraco * 2.81)) - 82.48;
 }
 
 // ignore: non_constant_identifier_names
