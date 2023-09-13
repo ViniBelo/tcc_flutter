@@ -90,7 +90,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
         title: const Text('Resultado'),
       ),
       body: Container(
-            height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -127,16 +127,16 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
-                              'Idade: ${widget.idade.toString()}',
+                              'Idade (I): ${widget.idade.toString()} anos',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
-                              'Peso: ${pesoFinal.toStringAsFixed(2)} kg',
+                              'Peso (P): ${pesoFinal.toStringAsFixed(2)} kg',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             if (widget.isEstimativaPesoChecked)
                               Text(
-                                'Circunferência do braço: ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
+                                'Circunferência do braço (CB): ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
                                 style: (const TextStyle(fontSize: 30)),
                               ),
                             Text(
@@ -144,7 +144,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
-                              'TMB: ${tmb.toStringAsFixed(2)}',
+                              'TMB: ${tmb.toStringAsFixed(2)} kcal',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                           ],
@@ -152,7 +152,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                         Column(
                           children: [
                             Text(
-                              'Fator Injúria: ${widget.fatorInjuria.toString()}',
+                              'Fator Injúria (FI): ${widget.fatorInjuria.toString()}',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
@@ -160,17 +160,17 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
-                              'Altura: ${alturaFinal.toStringAsFixed(0)} cm',
+                              'Altura (A): ${alturaFinal.toStringAsFixed(0)} cm',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             if (widget.isEstimativaAlturaChecked ||
                                 widget.isEstimativaPesoChecked)
                               Text(
-                                'Altura do joelho: ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
+                                'Altura do joelho (AJ): ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
                                 style: (const TextStyle(fontSize: 30)),
                               ),
                             Text(
-                              'Fator Atividade: ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
+                              'Fator Atividade (FA): ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                             Text(
@@ -190,30 +190,30 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Idade: ${widget.idade.toString()}',
+                            'Idade (I): ${widget.idade.toString()} anos',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Peso: ${pesoFinal.toStringAsFixed(2)} kg',
+                            'Peso (P): ${pesoFinal.toStringAsFixed(2)} kg',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           if (widget.isEstimativaPesoChecked)
                             Text(
-                              'Circunferência do braço: ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
+                              'Circunferência do braço (CB): ${circunferenciaDoBracoFinal.toStringAsFixed(2)} cm',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                           Text(
-                            'Altura: ${alturaFinal.toStringAsFixed(0)} cm',
+                            'Altura (A): ${alturaFinal.toStringAsFixed(0)} cm',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           if (widget.isEstimativaAlturaChecked ||
                               widget.isEstimativaPesoChecked)
                             Text(
-                              'Altura do joelho: ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
+                              'Altura do joelho (AJ): ${alturaDoJoelhoFinal.toStringAsFixed(2)} cm',
                               style: (const TextStyle(fontSize: 30)),
                             ),
                           Text(
-                            'Fator Injúria: ${widget.fatorInjuria.toString()}',
+                            'Fator Injúria (FI): ${widget.fatorInjuria.toString()}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
@@ -221,19 +221,19 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Temperatura Corporal: ${widget.fatorTermico.temperatura}, valor: ${widget.fatorTermico.fatorTermico}',
+                            'Temperatura Corporal (FT): ${widget.fatorTermico.temperatura}, valor: ${widget.fatorTermico.fatorTermico}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'Fator Atividade: ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
+                            'Fator Atividade (FA): ${widget.fatorAtividade.atividade}, valor: ${widget.fatorAtividade.fatorAtividade}',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'TMB: ${tmb.toStringAsFixed(2)}',
+                            'TMB: ${tmb.toStringAsFixed(2)} kcal',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                           Text(
-                            'GET: ${get.toStringAsFixed(2)}',
+                            'GET: ${get.toStringAsFixed(2)} kcal',
                             style: (const TextStyle(fontSize: 30)),
                           ),
                         ],
@@ -288,8 +288,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                       ),
                     ],
                   ),
-                  if (widget.isEstimativaAlturaChecked ||
-                      widget.isEstimativaPesoChecked)
+                  if (widget.isEstimativaAlturaChecked)
                     const Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Text(
@@ -297,8 +296,7 @@ class _ResultadoTelaState extends State<ResultadoTela> {
                         style: TextStyle(fontSize: 30),
                       ),
                     ),
-                  if (widget.isEstimativaAlturaChecked ||
-                      widget.isEstimativaPesoChecked)
+                  if (widget.isEstimativaAlturaChecked)
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Image.asset(

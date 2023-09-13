@@ -9,7 +9,8 @@ class MyDropdownButton<T> extends StatefulWidget {
       required this.context,
       required this.onChanged,
       required this.validator,
-      required this.controller});
+      required this.controller,
+      required this.icon});
   final T? selectedValue;
   final List<T> values;
   final List<String> labels;
@@ -17,6 +18,7 @@ class MyDropdownButton<T> extends StatefulWidget {
   final Function(T?) onChanged;
   final String? Function(T?)? validator;
   final TextEditingController controller;
+  final IconData icon;
 
   @override
   State<MyDropdownButton<T>> createState() => _MyDropdownButtonState();
@@ -35,6 +37,9 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
       width: (MediaQuery.of(context).size.width / 3) +
           (MediaQuery.of(context).size.width / 11),
       child: DropdownButtonFormField<T>(
+        iconEnabledColor: Colors.green,
+        icon: Icon(widget.icon),
+        iconSize: 40,
         dropdownColor: // Um tom de verde pastel muito claro
             const Color(0xFFF1FFD6),
         value: widget.selectedValue,
@@ -56,7 +61,8 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
               child: Text(
                 label,
                 style: const TextStyle(
-                  fontSize: 16,
+                  color: Colors.black,
+                  fontSize: 30,
                   height: 1.5,
                 ),
               ),

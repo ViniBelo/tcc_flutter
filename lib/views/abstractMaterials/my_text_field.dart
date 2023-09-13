@@ -1,4 +1,3 @@
-import 'package:estudos_flutter/views/screens/tela_fator_injuria.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -6,21 +5,23 @@ class MyTextField extends StatefulWidget {
   final String labelText;
   final TextInputType keyboardType;
   final Function(String) onChanged;
-  final FormFieldValidator validator;
+  final FormFieldValidator<String>? validator;
   final TextEditingController controller;
-  final MaskTextInputFormatter maskTextInputFormatter;
-  final IconData? icon;
+  final List<MaskTextInputFormatter> maskTextInputFormatters;
+  final bool? fi;
+  final IconData icon;
 
   const MyTextField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.labelText,
     required this.keyboardType,
     required this.onChanged,
     required this.validator,
     required this.icon,
-    required this.maskTextInputFormatter,
-  });
+    required this.maskTextInputFormatters,
+    this.fi,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -33,29 +34,25 @@ class _MyTextFieldState extends State<MyTextField> {
     return SizedBox(
       child: Column(
         children: [
-          SizedBox(
-            height: 50,
+          Padding(
+            padding: const EdgeInsets.only(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   widget.labelText,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 30),
                 ),
-                if (widget.icon != null)
+                if (widget.fi != null)
                   IconButton(
-                      color: Colors.green,
-                      onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return const FatorInjuriaTela();
-                            }),
-                          );
-                        });
-                      },
-                      icon: Icon(widget.icon)),
+                    color: Colors.green,
+                    onPressed: () {
+                      setState(() {
+                        // Navigate to another screen if widget.fi is not null
+                      });
+                    },
+                    icon: const Icon(Icons.list),
+                  ),
               ],
             ),
           ),
@@ -67,12 +64,27 @@ class _MyTextFieldState extends State<MyTextField> {
               children: [
                 const SizedBox(height: 20),
                 TextFormField(
+                  style: const TextStyle(fontSize: 30),
                   textAlign: TextAlign.center,
-                  inputFormatters: [widget.maskTextInputFormatter],
+                  inputFormatters: widget.maskTextInputFormatters,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(15.0),
                       borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    // labelText: widget.labelText,
+                    // labelStyle: const TextStyle(
+                    //   fontSize: 30,
+                    // ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        widget.icon,
+                        size: 40,
+                        color: Colors.green,
+                      ), // Ícone à direita
+                      onPressed: () {
+                        // Ação ao clicar no ícone à direita
+                      },
                     ),
                   ),
                   controller: widget.controller,

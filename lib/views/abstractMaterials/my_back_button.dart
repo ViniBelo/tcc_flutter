@@ -10,13 +10,24 @@ class MyFilledButton extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFFEAFCE0),
-        title: const Text('Você tem certeza?'),
+        title: const Text(
+          'Você tem certeza?',
+          style: TextStyle(fontSize: 30),
+        ),
         content: const Text(
-            'Você irá voltar para a tela anterior e todos os dados serão apagados'),
+          'Você irá voltar para a tela anterior e todos os dados serão apagados',
+          style: TextStyle(fontSize: 30),
+        ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Não'),
+            child: const Text(
+              'Não',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.green,
+              ),
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -25,7 +36,13 @@ class MyFilledButton extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const MeuApp()),
               );
             },
-            child: const Text('Sim'),
+            child: const Text(
+              'Sim',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.red,
+              ),
+            ),
           ),
         ],
       ),
@@ -35,12 +52,12 @@ class MyFilledButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
-      height: 50,
+      width: 300,
+      height: 65,
       child: FilledButton(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(200, 50),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
         ),
         onPressed: () async {
           bool? shouldPop = await _onBackPressed(context);
@@ -53,13 +70,13 @@ class MyFilledButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.delete, color: Colors.white),
+            Icon(Icons.replay_rounded, color: Colors.white),
             SizedBox(width: 8),
             Text(
               "Refazer cálculos",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 25,
                   color: Colors.white),
             ),
           ],

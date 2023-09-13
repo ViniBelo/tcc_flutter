@@ -17,21 +17,16 @@ class _MyCheckBoxState extends State<MyCheckBox> {
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.green;
+    Color getFillColor(Set<MaterialState> states) {
+      if (isChecked) {
+        return Colors.green; // Preenchimento verde quando marcado
       }
-      return Colors.green;
+      return const Color(0xFFF1FFD6); // Cor de preenchimento padrão
     }
 
     return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
+      checkColor: Colors.black, // Cor do ícone de seleção
+      fillColor: MaterialStateProperty.resolveWith(getFillColor),
       value: isChecked,
       onChanged: (bool? value) {
         setState(() {
@@ -41,6 +36,10 @@ class _MyCheckBoxState extends State<MyCheckBox> {
           widget.onChanged!(value);
         }
       },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.0), // Borda arredondada
+        side: const BorderSide(color: Colors.black), // Cor da borda preta
+      ),
     );
   }
 }

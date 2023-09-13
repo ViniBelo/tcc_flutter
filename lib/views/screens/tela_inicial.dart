@@ -66,6 +66,32 @@ class _TelaInicialState extends State<TelaInicial> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+
+    // Adicione o ouvinte ao controlador aqui
+    pesoInputController.addListener(() {
+      // Obtém o texto atual do controlador
+      String newText = pesoInputController.text;
+
+      // Chame a função updateMaskForPeso com o novo texto
+      final length = newText.length;
+
+      if (length > 5) {
+        setState(() {
+          pesoInputController.value =
+              maskPesoFormatter.updateMask(mask: '###.##');
+        });
+      } else if (length <= 5) {
+        setState(() {
+          pesoInputController.value =
+              maskPesoFormatter.updateMask(mask: '##.###');
+        });
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -75,7 +101,7 @@ class _TelaInicialState extends State<TelaInicial> {
         centerTitle: true,
         title: const Text(
           'Dados do Paciente',
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 30),
         ),
       ),
       body: Container(
@@ -111,7 +137,7 @@ class _TelaInicialState extends State<TelaInicial> {
                               children: [
                                 const Text(
                                   'Sexo',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 30),
                                 ),
                                 MyDropdownButton(
                                   controller: sexoInputController,
@@ -135,6 +161,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                     }
                                     return null;
                                   },
+                                  icon: Icons.wc_rounded,
                                 )
                               ],
                             ),
@@ -142,7 +169,7 @@ class _TelaInicialState extends State<TelaInicial> {
                               children: [
                                 const Text(
                                   'Raça / Etnia',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 30),
                                 ),
                                 MyDropdownButton(
                                   controller: etniaInputController,
@@ -165,30 +192,30 @@ class _TelaInicialState extends State<TelaInicial> {
                                     }
                                     return null;
                                   },
+                                  icon: Icons.people_outline_rounded,
                                 ),
                               ],
                             ),
                             Column(
                               children: [
                                 MyTextField(
-                                  maskTextInputFormatter: maskIdadeFormatter,
+                                  maskTextInputFormatters: [maskIdadeFormatter],
                                   controller: idadeInputController,
                                   labelText: 'Idade',
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {},
                                   validator: (entradaIdade) {
                                     var convertedEntradaIdade =
-                                        double.tryParse(entradaIdade);
+                                        double.tryParse(entradaIdade!);
                                     if (entradaIdade == '') {
                                       return "Campo Obrigatório";
-                                    } else if (convertedEntradaIdade! >
-                                            130 ||
+                                    } else if (convertedEntradaIdade! > 130 ||
                                         convertedEntradaIdade < 18) {
                                       return "A idade deve estar no intervalo entre 18 e 130";
                                     }
                                     return null;
                                   },
-                                  icon: null,
+                                  icon: Icons.cake_rounded,
                                 )
                               ],
                             ),
@@ -199,7 +226,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   children: [
                                     const Text(
                                       'Estimar peso?',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 30),
                                     ),
                                     MyCheckBox(
                                       onChanged: (value) {
@@ -214,19 +241,23 @@ class _TelaInicialState extends State<TelaInicial> {
                                   Column(
                                     children: [
                                       MyTextField(
-                                        maskTextInputFormatter:
-                                            maskPesoFormatter,
+                                        maskTextInputFormatters: [
+                                          maskPesoFormatter
+                                        ],
                                         controller: pesoInputController,
                                         labelText: 'Peso em kg',
                                         keyboardType: TextInputType.number,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                          pesoInputController.notifyListeners();
+                                        },
                                         validator: (entradaPeso) {
                                           if (entradaPeso == '') {
                                             return "Campo Obrigatório";
                                           }
                                           return null;
                                         },
-                                        icon: null,
+                                        icon: Icons.balance_rounded,
                                       ),
                                     ],
                                   ),
@@ -237,12 +268,12 @@ class _TelaInicialState extends State<TelaInicial> {
                                         child: Column(
                                           children: [
                                             MyTextField(
-                                              maskTextInputFormatter:
-                                                  maskAlturaDoJoelhoFormatter,
+                                              maskTextInputFormatters: [
+                                                maskAlturaDoJoelhoFormatter
+                                              ],
                                               controller:
                                                   alturaJoelhoInputController,
-                                              labelText:
-                                                  'Altura do joelho em cm',
+                                              labelText: 'AJ em cm',
                                               keyboardType:
                                                   TextInputType.number,
                                               onChanged: (value) {},
@@ -252,7 +283,8 @@ class _TelaInicialState extends State<TelaInicial> {
                                                 }
                                                 return null;
                                               },
-                                              icon: null,
+                                              icon: Icons
+                                                  .airline_seat_legroom_normal_rounded,
                                             ),
                                           ],
                                         ),
@@ -261,12 +293,12 @@ class _TelaInicialState extends State<TelaInicial> {
                                         child: Column(
                                           children: [
                                             MyTextField(
-                                              maskTextInputFormatter:
-                                                  maskPesoFormatter,
+                                              maskTextInputFormatters: [
+                                                maskAlturaFormatter,
+                                              ],
                                               controller:
                                                   circunferenciaBracoInputController,
-                                              labelText:
-                                                  'Circunferência do braço em cm',
+                                              labelText: 'CB em cm',
                                               keyboardType:
                                                   TextInputType.number,
                                               onChanged: (value) {},
@@ -278,7 +310,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                                 }
                                                 return null;
                                               },
-                                              icon: null,
+                                              icon: Icons.replay,
                                             ),
                                           ],
                                         ),
@@ -300,7 +332,7 @@ class _TelaInicialState extends State<TelaInicial> {
                               children: [
                                 const Text(
                                   'Temperatura Corporal',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 30),
                                 ),
                                 MyDropdownButton(
                                   controller: temperaturaInputController,
@@ -326,6 +358,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                     }
                                     return null;
                                   },
+                                  icon: Icons.thermostat_rounded,
                                 ),
                               ],
                             ),
@@ -333,7 +366,7 @@ class _TelaInicialState extends State<TelaInicial> {
                               children: [
                                 const Text(
                                   'Fator Atividade',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 30),
                                 ),
                                 MyDropdownButton(
                                   controller: atividadeInputController,
@@ -357,6 +390,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                     }
                                     return null;
                                   },
+                                  icon: Icons.local_hotel_rounded,
                                 )
                               ],
                             ),
@@ -369,7 +403,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   onChanged: (value) {},
                                   validator: (entradaInjuria) {
                                     var convertedEntradaInjuria =
-                                        double.tryParse(entradaInjuria);
+                                        double.tryParse(entradaInjuria!);
                                     if (entradaInjuria == '') {
                                       return "Campo Obrigatório";
                                     } else if (convertedEntradaInjuria! >
@@ -379,9 +413,11 @@ class _TelaInicialState extends State<TelaInicial> {
                                     }
                                     return null;
                                   },
-                                  icon: Icons.list,
-                                  maskTextInputFormatter:
-                                      maskFatorInjuriaFormatter,
+                                  icon: Icons.personal_injury_rounded,
+                                  maskTextInputFormatters: [
+                                    maskFatorInjuriaFormatter
+                                  ],
+                                  fi: true,
                                 ),
                               ],
                             ),
@@ -392,7 +428,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                   children: [
                                     const Text(
                                       'Estimar altura?',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 30),
                                     ),
                                     MyCheckBox(
                                       onChanged: (value) {
@@ -407,8 +443,9 @@ class _TelaInicialState extends State<TelaInicial> {
                                   Column(
                                     children: [
                                       MyTextField(
-                                        maskTextInputFormatter:
-                                            maskAlturaFormatter,
+                                        maskTextInputFormatters: [
+                                          maskAlturaFormatter
+                                        ],
                                         controller: alturaInputController,
                                         labelText: 'Altura em cm',
                                         keyboardType: TextInputType.number,
@@ -419,7 +456,7 @@ class _TelaInicialState extends State<TelaInicial> {
                                           }
                                           return null;
                                         },
-                                        icon: null,
+                                        icon: Icons.height_rounded,
                                       ),
                                     ],
                                   ),
@@ -427,10 +464,11 @@ class _TelaInicialState extends State<TelaInicial> {
                                   Column(
                                     children: [
                                       MyTextField(
-                                        maskTextInputFormatter:
-                                            maskAlturaFormatter,
+                                        maskTextInputFormatters: [
+                                          maskAlturaDoJoelhoFormatter,
+                                        ],
                                         controller: alturaJoelhoInputController,
-                                        labelText: 'Altura do joelho em cm',
+                                        labelText: 'AJ em cm',
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {},
                                         validator: (alturaDoJoelho) {
@@ -439,7 +477,8 @@ class _TelaInicialState extends State<TelaInicial> {
                                           }
                                           return null;
                                         },
-                                        icon: null,
+                                        icon: Icons
+                                            .airline_seat_legroom_normal_rounded,
                                       ),
                                     ],
                                   ),
@@ -453,7 +492,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 ),
                 FilledButton(
                   style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(200, 50),
+                      minimumSize: const Size(300, 65),
                       backgroundColor: Colors.green),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -513,7 +552,7 @@ class _TelaInicialState extends State<TelaInicial> {
                         "Finalizar",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 25,
                             color: Colors.white),
                       ),
                     ],
