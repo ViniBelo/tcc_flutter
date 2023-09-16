@@ -76,15 +76,10 @@ class _MyTextFieldState extends State<MyTextField> {
                     // labelStyle: const TextStyle(
                     //   fontSize: 30,
                     // ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        widget.icon,
-                        size: 40,
-                        color: Colors.green,
-                      ), // Ícone à direita
-                      onPressed: () {
-                        // Ação ao clicar no ícone à direita
-                      },
+                    suffixIcon: Icon(
+                      widget.icon,
+                      size: 40,
+                      color: Colors.green,
                     ),
                   ),
                   controller: widget.controller,

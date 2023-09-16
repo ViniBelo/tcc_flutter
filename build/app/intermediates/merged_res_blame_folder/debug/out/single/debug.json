@@ -8,6 +8,10 @@
         "source": "com.example.estudos_flutter.app-main-5:/drawable-v21/launch_background.xml"
     },
     {
+        "merged": "com.example.estudos_flutter.app-merged_res-11:/mipmap-xxhdpi_icon.png.flat",
+        "source": "com.example.estudos_flutter.app-main-5:/mipmap-xxhdpi/icon.png"
+    },
+    {
         "merged": "com.example.estudos_flutter.app-merged_res-11:/mipmap-hdpi_ic_launcher.png.flat",
         "source": "com.example.estudos_flutter.app-main-5:/mipmap-hdpi/ic_launcher.png"
     },
@@ -18,10 +22,6 @@
     {
         "merged": "com.example.estudos_flutter.app-merged_res-11:/mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "com.example.estudos_flutter.app-main-5:/mipmap-xxxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "com.example.estudos_flutter.app-merged_res-11:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.example.estudos_flutter.app-main-5:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
         "merged": "com.example.estudos_flutter.app-merged_res-11:/mipmap-mdpi_ic_launcher.png.flat",
