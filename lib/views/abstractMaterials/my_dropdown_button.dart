@@ -62,7 +62,7 @@ class _MyDropdownButtonState<T> extends State<MyDropdownButton<T>> {
                 label,
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 30,
+                  fontSize: 28,
                   height: 1.5,
                 ),
               ),
